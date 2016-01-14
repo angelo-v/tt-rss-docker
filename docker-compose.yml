@@ -1,0 +1,10 @@
+ttrss:
+  build: .
+  ports:
+   - "80:80"
+  links:
+   - postgres
+postgres:
+  image: postgres:9.5
+  env_file:
+   - ./postgres.env
