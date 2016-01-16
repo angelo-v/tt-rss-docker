@@ -4,6 +4,8 @@ ttrss:
    - "80:80"
   links:
    - postgres
+  env_file:
+   - ./ttrss.env
 postgres:
   image: postgres:9.5
   env_file:
