@@ -6,7 +6,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y
 RUN apt-get install git libcurl4-openssl-dev libpng12-dev libpq-dev -y
 
 # install php modules & configure php
-RUN docker-php-ext-install mbstring json curl gd pdo_pgsql
+RUN docker-php-ext-install mbstring json curl gd pgsql
 
 # install tt-rss
 RUN git clone https://tt-rss.org/git/tt-rss.git .
