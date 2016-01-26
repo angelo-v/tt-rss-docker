@@ -1,13 +1,34 @@
 aveltens/tt-rss
 =========
 
-This image runs [tiny-tiny-rss](https://tt-rss.org) on an apache webserver.
+This image contains two tags, that combined allow to run [tiny-tiny-rss](https://tt-rss.org) and the update process on an apache webserver:
+
+ - aveltens/tt-rss:updater
+ - aveltens/tt-rss:apache
+
+## aveltens/tt-rss:updater
+
+A container from this image contains the tt-rss files and runs the update process, that will update the feeds.
 
 It must be linked to a PostgreSQL database container with alias 'postgres'. MySQL is not supported.
 
 Example docker run command:
 
-`docker run --name my-tt-rss -d -p 80:80 -e SELF_URL_PATH=http://example.org/ --link my-ttrss-postgres:postgres aveltens/tt-rss`
+`docker run --name my-tt-rss-updater -d -e SELF_URL_PATH=http://example.org/ --link my-ttrss-postgres:postgres aveltens/tt-rss:updater`
+
+`SELF_URL_PATH`: Same as tiny-tiny-rss config variable named SELF_URL_PATH.
+
+## aveltens/tt-rss:apache
+
+A container from this image runs the apache webserver and hosts tiny-tiny-rss by including the volumes from the tt-rss:updater container.
+
+It must be linked to a PostgreSQL database container with alias 'postgres'. MySQL is not supported.
+
+It must include the volumes from the updater container.
+
+Example docker run command:
+
+`docker run --name my-tt-rss -d -p 80:80 -e SELF_URL_PATH=http://example.org/ --volumes-from my-tt-rss-updater --link my-ttrss-postgres:postgres aveltens/tt-rss:apache`
 
 `SELF_URL_PATH`: Same as tiny-tiny-rss config variable named SELF_URL_PATH.
 
