@@ -1,11 +1,19 @@
 ttrss:
-  build: .
-  ports:
-   - "80:80"
+  image: aveltens/tt-rss:updater
   links:
    - postgres
   env_file:
    - ./ttrss.env
+web:
+  image: aveltens/tt-rss:apache
+  links:
+    - postgres
+  volumes_from:
+   - ttrss
+  ports:
+    - "80:80"
+  env_file:
+    - ./ttrss.env
 postgres:
   image: postgres:9.5
   env_file:
