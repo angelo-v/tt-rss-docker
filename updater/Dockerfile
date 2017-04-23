@@ -1,4 +1,4 @@
-FROM php:5.5
+FROM php:5
 MAINTAINER Angelo Veltens <angelo.veltens@online.de>
 
 RUN apt-get update && \
